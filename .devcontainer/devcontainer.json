@@ -21,5 +21,12 @@
         "version": "lts"
       }
     },
-    "postCreateCommand": ".devcontainer/setup.sh"
+	"postCreateCommand": ".devcontainer/setup.sh",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"saoudrizwan.claude-dev"
+			]
+		}
+	}
 }
