@@ -3,28 +3,31 @@ services:
     name: "MCP Puppeteer Server"
     description: "Puppeteer MCP server for browser automation (Docker container)"
     triggeredBy:
-      - manual
+      - manual  # You can also add 'postEnvironmentStart' if you want it to auto-start
     commands:
       start: |
-        # Force cleanup of any existing Puppeteer containers
-        echo "Cleaning up any existing Puppeteer containers..."
-        docker rm -f puppeteer 2>/dev/null || true
-        sleep 2  # Give Docker time to clean up
+        echo "Checking if Puppeteer MCP server is already running..."
+        if docker ps --filter "ancestor=mcp/puppeteer" --format '{{.ID}}' | grep -q .; then
+          echo "Puppeteer MCP server already running. Nothing to do."
+        else
+          echo "Restart the puppeteer MCP server from the MCP Servers Cline extension panel" 
+        fi
 
-        echo "Starting Puppeteer MCP server with Docker..."
-        docker run -i --rm --init -e DOCKER_CONTAINER=true --name puppeteer mcp/puppeteer
+        # Keep the service alive with a dummy long-running command
+        echo "Keeping service alive..."
+        tail -f /dev/null
+
 
       ready: |
-        if docker ps | grep -q puppeteer; then
+        if docker ps --filter "ancestor=mcp/puppeteer" --format '{{.ID}}' | grep -q .; then
           echo "Puppeteer MCP server is running"
           exit 0
         else
           echo "Puppeteer MCP server is not running"
+          echo "⚠️  Please restart the server from the MCP Servers Cline extension panel ⚠️"
           exit 1
         fi
 
       stop: |
-        echo "Stopping Puppeteer MCP server container..."
-        docker stop puppeteer || true
-        echo "Removing Puppeteer MCP server container..."
-        docker rm -f puppeteer || true
+        echo "Stopping any running Puppeteer MCP containers..."
+        docker ps --filter "ancestor=mcp/puppeteer" -q | xargs -r docker stop
