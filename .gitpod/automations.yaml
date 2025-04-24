@@ -25,7 +25,7 @@ services:
           exit 0
         else
           echo "Puppeteer MCP server is not running"
-          echo "⚠️  Please restart the server from the MCP Servers Cline extension panel ⚠️"
+          echo "⚠️  Please start/restart the server from the MCP Servers Cline extension panel ⚠️"
           exit 1
         fi
 
