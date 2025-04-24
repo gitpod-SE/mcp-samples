@@ -3,8 +3,7 @@ services:
     name: "MCP Puppeteer Server"
     description: "Puppeteer MCP server for browser automation (Docker container)"
     triggeredBy:
-      - postDevcontainerStart
-      - postEnvironmentStart
+      - manual
     commands:
       start: |
         # Force cleanup of any existing Puppeteer containers
