@@ -3,7 +3,8 @@ services:
     name: "MCP Puppeteer Server"
     description: "Puppeteer MCP server for browser automation (Docker container)"
     triggeredBy:
-      - manual  # You can also add 'postEnvironmentStart' if you want it to auto-start
+      - postDevcontainerStart
+      - postEnvironmentStart
     commands:
       start: |
         echo "Checking if Puppeteer MCP server is already running..."
