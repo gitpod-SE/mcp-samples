@@ -5,7 +5,6 @@
 {
 	"name": "Gitpod",
 	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-	"remoteUser": "root",
 	"features": {
       "ghcr.io/devcontainers/features/docker-in-docker:2": {
       "version": "latest",
